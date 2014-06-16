@@ -1,5 +1,6 @@
 
 var gl;
+var distance = 4.0;
 
 function initGL(canvas) {
     try {
@@ -23,16 +24,16 @@ function getShader(gl, id) {
     var str = "";
     var k = shaderScript.firstChild;
     while (k) {
-        if (k.nodeType == 3) {
+        if (k.nodeType === 3) {
             str += k.textContent;
         }
         k = k.nextSibling;
     }
 
     var shader;
-    if (shaderScript.type == "x-shader/x-fragment") {
+    if (shaderScript.type === "x-shader/x-fragment") {
         shader = gl.createShader(gl.FRAGMENT_SHADER);
-    } else if (shaderScript.type == "x-shader/x-vertex") {
+    } else if (shaderScript.type === "x-shader/x-vertex") {
         shader = gl.createShader(gl.VERTEX_SHADER);
     } else {
         return null;
@@ -69,9 +70,6 @@ function initShaders() {
 
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-//    shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
-//    gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
 
     shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
     shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
@@ -118,38 +116,6 @@ function initBuffers(verts, indices) {
 
     vertices = verts;
 
-//    vertices = [
-//        // Front face
-//        -1.0, -1.0, 1.0,
-//        1.0, -1.0, 1.0,
-//        1.0, 1.0, 1.0,
-//        -1.0, 1.0, 1.0,
-//        // Back face
-//        -1.0, -1.0, -1.0,
-//        -1.0, 1.0, -1.0,
-//        1.0, 1.0, -1.0,
-//        1.0, -1.0, -1.0,
-//        // Top face
-//        -1.0, 1.0, -1.0,
-//        -1.0, 1.0, 1.0,
-//        1.0, 1.0, 1.0,
-//        1.0, 1.0, -1.0,
-//        // Bottom face
-//        -1.0, -1.0, -1.0,
-//        1.0, -1.0, -1.0,
-//        1.0, -1.0, 1.0,
-//        -1.0, -1.0, 1.0,
-//        // Right face
-//        1.0, -1.0, -1.0,
-//        1.0, 1.0, -1.0,
-//        1.0, 1.0, 1.0,
-//        1.0, -1.0, 1.0,
-//        // Left face
-//        -1.0, -1.0, -1.0,
-//        -1.0, -1.0, 1.0,
-//        -1.0, 1.0, 1.0,
-//        -1.0, 1.0, -1.0
-//    ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
     cubeVertexPositionBuffer.itemSize = 3;
@@ -157,14 +123,6 @@ function initBuffers(verts, indices) {
 
     cubeVertexIndexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-//    var cubeVertexIndices = [
-//        0, 1, 2, 0, 2, 3, // Front face
-//        4, 5, 6, 4, 6, 7, // Back face
-//        8, 9, 10, 8, 10, 11, // Top face
-//        12, 13, 14, 12, 14, 15, // Bottom face
-//        16, 17, 18, 16, 18, 19, // Right face
-//        20, 21, 22, 20, 22, 23  // Left face
-//    ];
 
     var cubeVertexIndices = indices;
 
@@ -183,7 +141,7 @@ function drawScene() {
 
     mat4.identity(mvMatrix);
 
-    mat4.translate(mvMatrix, [0.0, 0.0, -8.0]);
+    mat4.translate(mvMatrix, [0.0, 0.0, -distance]);
 
     mvPushMatrix();
     mat4.rotate(mvMatrix, degToRad(rCube), [1, 1, 1]);
@@ -233,44 +191,6 @@ function webGLStart() {
     tick();
 }
 
-var testv = [
-    // Front face
-    -1.0, -1.0, 1.0,
-    1.0, -1.0, 1.0,
-    1.0, 1.0, 1.0,
-    -1.0, 1.0, 1.0,
-    // Back face
-    -1.0, -1.0, -1.0,
-    -1.0, 1.0, -1.0,
-    1.0, 1.0, -1.0,
-    1.0, -1.0, -1.0,
-    // Top face
-    -1.0, 1.0, -1.0,
-    -1.0, 1.0, 1.0,
-    1.0, 1.0, 1.0,
-    1.0, 1.0, -1.0,
-    // Bottom face
-    -1.0, -1.0, -1.0,
-    1.0, -1.0, -1.0,
-    1.0, -1.0, 1.0,
-    -1.0, -1.0, 1.0,
-    // Right face
-    1.0, -1.0, -1.0,
-    1.0, 1.0, -1.0,
-    1.0, 1.0, 1.0,
-    1.0, -1.0, 1.0,
-    // Left face
-    -1.0, -1.0, -1.0,
-    -1.0, -1.0, 1.0,
-    -1.0, 1.0, 1.0,
-    -1.0, 1.0, -1.0
-];
-
-var testi = [
-    0, 1, 2, 0, 2, 3, // Front face
-    4, 5, 6, 4, 6, 7, // Back face
-    8, 9, 10, 8, 10, 11, // Top face
-    12, 13, 14, 12, 14, 15, // Bottom face
-    16, 17, 18, 16, 18, 19, // Right face
-    20, 21, 22, 20, 22, 23  // Left face
-];
+function updateDistance(dist) {
+    distance = dist;
+}
