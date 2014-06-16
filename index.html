@@ -44,12 +44,26 @@
         <div id="main_page">
             <h1>Surfaces</h1>
 
-            <canvas id="lesson04-canvas" style="border: none;" width="500" height="500"></canvas>
+
+
+            <div id="ame" class="page box_shadow">
+                <h2>Spirit</h2>
+                
+                <div class="options">
+                    <label for="order">Order</label><input id="order" type="number" value="3" min="1" /><br/>
+                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="50" min="1" /><br/>
+                    <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
+                    <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
+                    <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
+                </div>
+                
+                <canvas id="spirit" class="box_shadow" width="500px" height="500px"></canvas>
+            </div>
 
             <div id="forme" class="page box_shadow">
                 <h2>Shape</h2>
 
-                <div id="options">
+                <div class="options">
                     <label for="order">Order</label><input id="order" type="number" value="3" min="1" onchange="updateOrder(this.value)" /><br/>
                     <label for="resolution">Resolution</label><input id="resolution" type="number" value="20" min="1" onchange="updateResolution(this.value)" /><br/>
                     <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
@@ -60,18 +74,19 @@
                 <canvas id="shape" class="box_shadow" width="500px" height="500px"></canvas>
             </div>
 
-            <div id="ame" class="page box_shadow">
-                <h2>Spirit</h2>
-                
-                <div id="options">
-                    <label for="order">Order</label><input id="order" type="number" value="3" min="1" /><br/>
-                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="50" min="1" /><br/>
-                    <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
-                    <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
-                    <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
+            <div id="surfaceDiv" class="page box_shadow">
+                <h2>Surface</h2>
+                <canvas id="surfaceCanvas" style="border: none;" width="500" height="500"></canvas>
+                <div class="options">
+                    <h3>Extrusion Type</h3>
+                    <input id="simple" type="radio" /><label for="simple">Simple</label>
+                    <input id="bevel" type="radio" /><label for="bevel">Bevel</label>
+                    <input id="lattice" type="radio" /><label for="lattice">Lattice</label>
+                    <br/><br/>
+                    <button type="button" onclick="alert('Hello world!')">Generate surface</button>
+
                 </div>
-                
-                <canvas id="spirit" class="box_shadow" width="500px" height="500px"></canvas>
+
             </div>
             
             
