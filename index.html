@@ -1,0 +1,83 @@
+
+<html>
+
+    <head>
+        <title>Surfaces</title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+        <link type="text/css" rel="stylesheet" href="surfaces.css" />
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson04/glMatrix-0.9.5.min.js"></script>
+        <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson04/webgl-utils.js"></script>
+        <script src="webgl.js" ></script>
+
+        <script id="shader-fs" type="x-shader/x-fragment">
+            precision mediump float;
+
+            varying vec4 vColor;
+
+            void main(void) {
+            gl_FragColor = vColor;
+            }
+        </script>
+
+        <script id="shader-vs" type="x-shader/x-vertex">
+            attribute vec3 aVertexPosition;
+            attribute vec4 aVertexColor;
+
+            uniform mat4 uMVMatrix;
+            uniform mat4 uPMatrix;
+
+            varying vec4 vColor;
+
+            void main(void) {
+            gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+            vColor = aVertexColor;
+            }
+        </script>
+
+    </head>
+
+
+    <body onload="webGLStart();">
+
+
+        <div id="main_page">
+            <h1>Surfaces</h1>
+
+            <canvas id="lesson04-canvas" style="border: none;" width="500" height="500"></canvas>
+
+            <div id="forme" class="page box_shadow">
+                <h2>Shape</h2>
+
+                <div id="options">
+                    <label for="order">Order</label><input id="order" type="number" value="3" min="1" onchange="updateOrder(this.value)" /><br/>
+                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="20" min="1" onchange="updateResolution(this.value)" /><br/>
+                    <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
+                    <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
+                    <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
+                </div>
+                
+                <canvas id="shape" class="box_shadow" width="500px" height="500px"></canvas>
+            </div>
+
+            <div id="ame" class="page box_shadow">
+                <h2>Spirit</h2>
+                
+                <div id="options">
+                    <label for="order">Order</label><input id="order" type="number" value="3" min="1" /><br/>
+                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="50" min="1" /><br/>
+                    <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
+                    <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
+                    <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
+                </div>
+                
+                <canvas id="spirit" class="box_shadow" width="500px" height="500px"></canvas>
+            </div>
+            
+            
+            <script src="bsplines.js"></script>
+
+        </div>
+    </body>
+
+</html>

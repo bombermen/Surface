@@ -1,0 +1,77 @@
+html {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+body {
+    background-color: #DDD;
+}
+
+#main_page {
+    width: 1024px;
+    margin: 20px auto;
+    height: 800px;
+}
+
+#myCanvas {
+    background-color: #FFF;
+}
+
+.page {
+    padding: 10px;
+    background-color: #FFF;
+    margin: 10px 0;
+}
+
+.box_shadow {
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, .25);
+}
+
+#forme {
+    width: 500px;
+    float: left;
+    display: inline;
+}
+
+#ame {
+    width: 500px;
+}
+
+#options label {
+    width: 100px;
+}
+
+#options input {
+}
+
+h1 {
+    font-family: "Maven Pro Bold","Helvetica Neue",Helvetica,sans-serif;
+    font-size: 48pt;
+    font-weight: bold;
+    color: #FFF;
+    margin-bottom: 10px;
+    text-shadow: 0px 3px 0px #b2a98f,
+        0px 7px 5px rgba(0,0,0,0.15),
+        0px 12px 1px rgba(0,0,0,0.1),
+        0px 16px 15px rgba(0,0,0,0.1);
+}
+
+
+h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 200%;
+    color: #FFF;
+    font-variant: small-caps;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .5),
+        -1px -1px 2px rgba(0, 0, 0, .5),
+        0 0 6px #000;
+}
+
+h3 {
+    font-size: 100%;
+    border-bottom: solid 1px #AAA;
+}
+
+input[type=range] {
+    width: 800px;
+}
