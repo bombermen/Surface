@@ -8,7 +8,9 @@
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson04/glMatrix-0.9.5.min.js"></script>
         <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson04/webgl-utils.js"></script>
-        <script src="webgl.js" ></script>
+        <script src="webgl.js"></script>
+        <script src="surface.js"></script>
+        
 
         <script id="shader-fs" type="x-shader/x-fragment">
             precision mediump float;
@@ -22,7 +24,7 @@
 
         <script id="shader-vs" type="x-shader/x-vertex">
             attribute vec3 aVertexPosition;
-            attribute vec4 aVertexColor;
+            //attribute vec4 aVertexColor;
 
             uniform mat4 uMVMatrix;
             uniform mat4 uPMatrix;
@@ -31,7 +33,8 @@
 
             void main(void) {
             gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-            vColor = aVertexColor;
+            
+            vColor = vec4(aVertexPosition, 1.0);
             }
         </script>
 
@@ -50,14 +53,14 @@
                 <h2>Spirit</h2>
                 
                 <div class="options">
-                    <label for="order">Order</label><input id="order" type="number" value="3" min="1" /><br/>
-                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="50" min="1" /><br/>
-                    <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
-                    <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
-                    <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
+                    <label for="order">Order</label><input id="order" type="number2" value="3" min="1" /><br/>
+                    <label for="resolution">Resolution</label><input id="resolution2" type="number" value="50" min="1" /><br/>
+                    <label for="cyclic">Cyclic</label><input id="cyclic2" type="checkbox" /><br/>
+                    <label for="first">First Endpoint</label><input id="first2" type="checkbox" /><br/>
+                    <label for="last">Last Endpoint</label><input id="last2" type="checkbox" /><br/>
                 </div>
                 
-                <canvas id="spirit" class="box_shadow" width="500px" height="500px"></canvas>
+                <canvas id="spirit" class="box_shadow" width="380px" height="500px"></canvas>
             </div>
 
             <div id="forme" class="page box_shadow">
@@ -65,33 +68,29 @@
 
                 <div class="options">
                     <label for="order">Order</label><input id="order" type="number" value="3" min="1" onchange="updateOrder(this.value)" /><br/>
-                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="20" min="1" onchange="updateResolution(this.value)" /><br/>
+                    <label for="resolution">Resolution</label><input id="resolution" type="number" value="5" min="1" onchange="updateResolution(this.value)" /><br/>
                     <label for="cyclic">Cyclic</label><input id="cyclic" type="checkbox" /><br/>
                     <label for="first">First Endpoint</label><input id="first" type="checkbox" /><br/>
                     <label for="last">Last Endpoint</label><input id="last" type="checkbox" /><br/>
                 </div>
                 
-                <canvas id="shape" class="box_shadow" width="500px" height="500px"></canvas>
+                <canvas id="shape" class="box_shadow" width="380px" height="500px"></canvas>
             </div>
 
             <div id="surfaceDiv" class="page box_shadow">
                 <h2>Surface</h2>
-                <canvas id="surfaceCanvas" style="border: none;" width="500" height="500"></canvas>
+                <canvas id="surfaceCanvas" style="border: none;" width="380px" height="500px"></canvas>
                 <div class="options">
                     <h3>Extrusion Type</h3>
-                    <input id="simple" type="radio" /><label for="simple">Simple</label>
-                    <input id="bevel" type="radio" /><label for="bevel">Bevel</label>
-                    <input id="lattice" type="radio" /><label for="lattice">Lattice</label>
+                    <input id="simple" name="group" type="radio" checked /><label for="simple">Simple</label>
+                    <input id="bevel" name="group" type="radio" /><label for="bevel">Bevel</label>
+                    <input id="lattice" name="group" type="radio" /><label for="lattice">Lattice</label>
                     <br/><br/>
-                    <button type="button" onclick="alert('Hello world!')">Generate surface</button>
-
+                    <button id="generateSurface" type="button" onclick="generateSurface()">Generate surface</button>
                 </div>
-
             </div>
             
-            
             <script src="bsplines.js"></script>
-
         </div>
     </body>
 
