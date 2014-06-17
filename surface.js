@@ -3,10 +3,7 @@ var verts = new Array();
 var indices = new Array();
 
 function createSurface(path, shape) {
-
-    verts = new Array();
-    indices = new Array();
-
+    
     for (var i = 0; i < path.length; ++i) {
         createSectionAt(path, shape, i);
     }
@@ -34,11 +31,21 @@ function createSectionAt(path, shape, i) {
     var k = {x: 0, y: 0, z: 1};
 
     if (i === 0) {
-        t.x = path[1].x - path[0].x;
-        t.y = path[1].y - path[0].y;
+        if (pathCyclic) {
+            t.x = path[1].x - path[path.length - 1].x;
+            t.y = path[1].y - path[path.length - 1].y;
+        } else {
+            t.x = path[1].x - path[0].x;
+            t.y = path[1].y - path[0].y;
+        }
     } else if (i === path.length - 1) {
-        t.x = path[path.length - 1].x - path[path.length - 2].x;
-        t.y = path[path.length - 1].y - path[path.length - 2].y;
+        if (pathCyclic) {
+            t.x = path[1].x - path[path.length - 1].x;
+            t.y = path[1].y - path[path.length - 1].y;
+        } else {
+            t.x = path[path.length - 1].x - path[path.length - 2].x;
+            t.y = path[path.length - 1].y - path[path.length - 2].y;
+        }
     } else {
         t.x = path [i + 1].x - path[i - 1].x;
         t.y = path [i + 1].y - path[i - 1].y;
@@ -58,21 +65,67 @@ function createSectionAt(path, shape, i) {
         s.x = shape[j].x / shapeCanvas.width - .5;
         s.y = shape[j].y / shapeCanvas.height - .5;
 
-        var ame = {x: 0, y: 0};
-        ame.x = path[i].x / pathCanvas.width - .5;
-        ame.y = path[i].y / pathCanvas.height - .5;
+        var p = {x: 0, y: 0};
+         p.x = path[i].x / pathCanvas.width - .5;
+         p.y = path[i].y / pathCanvas.height - .5;
 
-        verts.push(ame.x + s.x * v.x);
-        verts.push(ame.y + s.x * v.y);
+        verts.push( p.x + s.x * v.x);
+        verts.push( p.y + s.x * v.y);
         verts.push(s.y);
     }
 }
 
-function generateSurface() {
-    createSurface(pathCurve, shapeCurve);
-    initBuffers(verts, indices);
+function generateLattice(shape, angle, steps) {
+    
 }
 
+function simpleExtrusion(shape, ratio, length) {
+    
+    for(var i = 0, len = shape.length; i < len; ++i) {
+        var s = {x: 0, y: 0};
+        s.x = shape[i].x / shapeCanvas.width - .5;
+        s.y = shape[i].y / shapeCanvas.height - .5;
+        
+        verts.push(s.x);
+        verts.push(s.y);
+        verts.push(0);
+    }
+    
+    for(var i = 0, len = shape.length; i < len; ++i) {
+        var s = {x: 0, y: 0};
+        s.x = shape[i].x / shapeCanvas.width - .5;
+        s.y = shape[i].y / shapeCanvas.height - .5;
+        
+        verts.push(s.x / ratio);
+        verts.push(s.y / ratio);
+        verts.push(length);
+        
+        indices.push(i);
+        indices.push(i + 1);
+        indices.push(len + i - 1);
+        
+        indices.push(i + 1);
+        indices.push(len + i);
+        indices.push(len + i - 1);
+    }
+    
+    console.log(indices);
+}
+
+function generateSurface() {
+    
+    verts = new Array();
+    indices = new Array();
+    
+    if ($("#bevel:checked").val() === 'on') {
+        createSurface(pathCurve, shapeCurve);
+    } else if ($("#simple:checked").val() === 'on') {
+        simpleExtrusion(shapeCurve, .5, 1);
+    } else if ($("#lattice:checked").val() === 'on') {
+        generateLattice(shapeCurve, 2 * Math.PI, 32);
+    }
+    initBuffers(verts, indices);
+}
 $(document).ready(function () {
 	$("#editMode").hide();
 	$("#editModeLabel").hide();
