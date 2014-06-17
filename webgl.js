@@ -54,7 +54,6 @@ function getShader(gl, id) {
 
 
 var shaderProgram;
-var wireframeProgram;
 
 function initShaders() {
     var fragmentShader = getShader(gl, "shader-fs");
@@ -74,10 +73,8 @@ function initShaders() {
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-
     shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
     shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-
 }
 
 
@@ -157,8 +154,10 @@ function drawScene() {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
     setMatrixUniforms();
 
+
     if(colorMode != 2)
     {    
+        gl.enable(gl.DEPTH_TEST);
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uIsWireFramed"), 0);
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uColorMode"), colorMode);
         gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
@@ -170,6 +169,7 @@ function drawScene() {
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uIsWireFramed"), 1);
         gl.drawElements(gl.LINE_STRIP, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
     }
+
     mvPopMatrix();
 
 }
@@ -211,7 +211,6 @@ function webGLStart() {
 function updateDistance(dist) {
     distance = dist;
 }
-
 
 function render(choice)
 {

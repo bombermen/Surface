@@ -10,7 +10,7 @@
         <script type="text/javascript" src="http://learningwebgl.com/lessons/lesson04/webgl-utils.js"></script>
         <script src="webgl.js"></script>
         <script src="surface.js"></script>
-        
+
 
         <script id="shader-fs" type="x-shader/x-fragment">
             precision mediump float;
@@ -36,8 +36,8 @@
 
             void main(void) {
             gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-            
-            if(uIsWireFramed == 0)
+
+           if(uIsWireFramed == 0)
             {
                 if(uColorMode == 0)
                     vColor = vec4(aVertexPosition + vec3(.5), 1.0);
@@ -50,7 +50,7 @@
         </script>
 
     </head>
-	
+
 
     <body onload="webGLStart();" onselectstart="return false"  oncontextmenu="return false">
 
@@ -61,8 +61,8 @@
 
             <div id="ame" class="page box_shadow" >
                 <h2>Path</h2>
-                
-				<canvas id="path" class="box_shadow" width="380px" height="500px"></canvas>
+
+                <canvas id="path" class="box_shadow" width="450px" height="450px"></canvas>
                 <div class="options">
                     <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
                     <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
@@ -74,7 +74,7 @@
 
             <div id="forme" class="page box_shadow">
                 <h2>Shape</h2>
-				<canvas id="shape" class="box_shadow" width="380px" height="500px"></canvas>
+                <canvas id="shape" class="box_shadow" width="450px" height="450px"></canvas>
                 <div class="options firstPart">
                     <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
                     <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
@@ -86,7 +86,7 @@
 
             <div id="surfaceDiv" class="page box_shadow">
                 <h2>Surface</h2>
-				<canvas id="surfaceCanvas" style="border: none; margin-top: 10px;" width="380px" height="500px"></canvas>
+                <canvas id="surfaceCanvas" style="border: none; margin-top: 10px;" width="450px" height="450px"></canvas>
                 <div class="options">
                     <h3>Render Mode</h3>
                     <input id="solid" name="render" type="radio" checked onclick="render(0)"/><label for="solid">Solid</label>
@@ -94,10 +94,9 @@
 
                     <h3>Color Mode</h3>
                     <input id="colors" name="color" type="radio" checked onclick="color(0)"/><label for="colors">Lot of colors</label>
-                    <input id="simple" name="color" type="radio"  onclick="color(1)" /><label for="simple">Simple Color</label>
-                    <input id="none" name="color" type="radio"  onclick="color(2)" /><label for="none">None</label>
-                    
+                    <input id="unique" name="color" type="radio" onclick="color(1)"/><label for="unique">Simple Color</label>
 
+              <input id="none" name="color" type="radio"  onclick="color(2)" /><label for="none">None</label> 
 
                     <br/>
                     <label for="distance">Distance</label><input id="distance" type="range" min="1.0" max="5.0" value="4" step="0.01" oninput="updateDistance(this.value)" />
@@ -107,20 +106,20 @@
                     <input id="lattice" name="group" type="radio" /><label for="lattice">Lattice</label>
                     <br/><br/>
                     <button id="generateSurface" type="button" onclick="generateSurface()">Generate surface</button>
-					<label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" />
+                    <label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" />
                     <br/>
-                    <label for="length">Length</label><input id="length" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="" />
-                    <label for="ratio">Ratio</label><input id="ratio" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="" />
+                    <label for="length">Length</label><input id="length" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
+                    <label for="ratio">Ratio</label><input id="ratio" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
 
-                    <label for="angle">Angle</label><input id="angle" type="range" min="0.0" max="6.28318530718" value="3.14" step="0.01" oninput="" />
-                    <label for="steps">Steps</label><input id="steps" type="range" min="1.0" max="1.0" value="0.5" step="0.01" oninput="" /> 
+                    <label for="angle">Angle</label><input id="angle" type="range" min="0.0" max="1.0" value="1.0" step="0.01" oninput="updateSurface()" /><br/>
+                    <label for="steps">Steps</label><input id="steps" type="range" min="2" max="100" value="32" step="1" oninput="updateSurface()" /><br/>
                 </div>
             </div>
-            
+
             <script src="shape.js"></script>
-            
+
             <script src="path.js"></script>
-            
+
         </div>
     </body>
 
