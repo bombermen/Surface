@@ -72,3 +72,13 @@ function generateSurface() {
     createSurface(pathCurve, shapeCurve);
     initBuffers(verts, indices);
 }
+
+$(document).ready(function () {
+	$("#editMode").hide();
+	$("#editModeLabel").hide();
+
+	$("#generateSurface").click(function(){
+		$("#editMode").show();
+		$("#editModeLabel").show();
+	});
+});

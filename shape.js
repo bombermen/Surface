@@ -86,6 +86,7 @@ function shape_drawBackground() {
 }
 
 function shape_draw() {
+
     //ctx.clearRect(0, 0, canvas.width, canvas.height);
     shape_drawBackground();
 
@@ -102,6 +103,8 @@ function shape_draw() {
     }
 
     shape_drawPoints();
+	if ($("#editMode").is(":checked"))
+		generateSurface();
 }
 
 /**

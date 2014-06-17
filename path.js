@@ -102,6 +102,8 @@ function path_draw() {
     }
 
     path_drawPoints();
+	if ($("#editMode").is(":checked"))
+		generateSurface();
 }
 
 /**

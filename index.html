@@ -52,6 +52,7 @@
             <div id="ame" class="page box_shadow">
                 <h2>Path</h2>
                 
+				<canvas id="path" class="box_shadow" width="380px" height="500px"></canvas>
                 <div class="options">
                     <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
                     <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
@@ -59,27 +60,23 @@
                     <label for="pathFirst">First Endpoint</label><input id="pathFirst" type="checkbox" /><br/>
                     <label for="pathLast">Last Endpoint</label><input id="pathLast" type="checkbox" /><br/>
                 </div>
-                
-                <canvas id="path" class="box_shadow" width="380px" height="500px"></canvas>
             </div>
 
             <div id="forme" class="page box_shadow">
                 <h2>Shape</h2>
-
-                <div class="options">
+				<canvas id="shape" class="box_shadow" width="380px" height="500px"></canvas>
+                <div class="options firstPart">
                     <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
                     <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
                     <label for="shapeCyclic">Cyclic</label><input id="shapeCyclic" type="checkbox" /><br/>
                     <label for="shapeFirst">First Endpoint</label><input id="shapeFirst" type="checkbox" /><br/>
                     <label for="shapeLast">Last Endpoint</label><input id="shapeLast" type="checkbox" /><br/>
                 </div>
-                
-                <canvas id="shape" class="box_shadow" width="380px" height="500px"></canvas>
             </div>
 
             <div id="surfaceDiv" class="page box_shadow">
                 <h2>Surface</h2>
-                <canvas id="surfaceCanvas" style="border: none;" width="380px" height="500px"></canvas>
+				<canvas id="surfaceCanvas" style="border: none; margin-top: 10px;" width="380px" height="500px"></canvas>
                 <div class="options">
                     <br/>
                     <label for="distance">Distance</label><input id="distance" type="range" min="1.0" max="5.0" value="4" step="0.01" oninput="updateDistance(this.value)" />
@@ -89,6 +86,7 @@
                     <input id="lattice" name="group" type="radio" /><label for="lattice">Lattice</label>
                     <br/><br/>
                     <button id="generateSurface" type="button" onclick="generateSurface()">Generate surface</button>
+					<label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" /> 
                 </div>
             </div>
             
