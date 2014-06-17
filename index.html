@@ -53,8 +53,8 @@
                 <h2>Path</h2>
                 
                 <div class="options">
-                    <label for="pathOrder">Order</label><input id="pathOrder" type="number2" value="3" min="1" /><br/>
-                    <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" /><br/>
+                    <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
+                    <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
                     <label for="pathCyclic">Cyclic</label><input id="pathCyclic" type="checkbox" /><br/>
                     <label for="pathFirst">First Endpoint</label><input id="pathFirst" type="checkbox" /><br/>
                     <label for="pathLast">Last Endpoint</label><input id="pathLast" type="checkbox" /><br/>
@@ -67,8 +67,8 @@
                 <h2>Shape</h2>
 
                 <div class="options">
-                    <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="updateOrder(this.value)" /><br/>
-                    <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="updateResolution(this.value)" /><br/>
+                    <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
+                    <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
                     <label for="shapeCyclic">Cyclic</label><input id="shapeCyclic" type="checkbox" /><br/>
                     <label for="shapeFirst">First Endpoint</label><input id="shapeFirst" type="checkbox" /><br/>
                     <label for="shapeLast">Last Endpoint</label><input id="shapeLast" type="checkbox" /><br/>
