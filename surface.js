@@ -1,6 +1,8 @@
 
 var verts = new Array();
 var indices = new Array();
+var normals = new Array();
+var shapeNormals = new Array();
 
 function createSurface(path, shape) {
 
@@ -122,12 +124,12 @@ function generateLatticeSection(shape, angle) {
 }
 
 function simpleExtrusion(shape, ratio, length) {
-    
+
     var steps = $("#steps").val();
-    for(var i = 0; i < steps; ++i) {
+    for (var i = 0; i < steps; ++i) {
         generateSimpleSectionAt(shape, i, ratio, length, steps - 1);
     }
-    
+
     for (var i = 0; i < steps - 1; ++i) {
         for (var j = 0; j < shape.length - 1; ++j) {
             //first triangle
@@ -144,10 +146,10 @@ function simpleExtrusion(shape, ratio, length) {
 }
 
 function generateSimpleSectionAt(shape, i, ratio, length, steps) {
-    
+
     var z = i * length / steps;
     var currentRatio = 1 - (i * ratio / steps);
-    
+
     for (var j = 0, len = shape.length; j < len; ++j) {
         var s = {x: 0, y: 0};
         s.x = shape[j].x / shapeCanvas.width - .5;
@@ -163,15 +165,63 @@ function generateSurface() {
 
     verts = new Array();
     indices = new Array();
+    normals = new Array();
+
+    var shape = new Array();
+    //init shape
+    for (var i = 0, len = shapeCurve.length; i < len; ++i) {
+        shape.push({
+            x: shapeCurve[i].x / shapeCanvas.width - .5,
+            y: shapeCurve[i].y / shapeCanvas.height - .5});
+    }
+
+    //init normals
+    var halfPi = Math.PI / 2;
+    var t = {x: 0, y: 0};
+    for (var i = 0, len = shape.length; i < len; ++i) {
+        if (i === 0) {
+            if (shapeCyclic) {
+                t.x = shape[1].x - shape[len - 1].x;
+                t.y = shape[1].y - shape[len - 1].y;
+            } else {
+                t.x = shape[1].x - shape[0].x;
+                t.y = shape[1].y - shape[0].y;
+            }
+        } else if (i === len - 1) {
+            if (shapeCyclic) {
+                t.x = shape[1].x - shape[len - 1].x;
+                t.y = shape[1].y - shape[len - 1].y;
+            } else {
+                t.x = shape[len - 1].x - shape[len - 2].x;
+                t.y = shape[len - 1].y - shape[len - 2].y;
+            }
+        } else {
+            t.x = shape [i + 1].x - shape[i - 1].x;
+            t.y = shape [i + 1].y - shape[i - 1].y;
+        }
+        
+        norm = (Math.sqrt(t.x * t.x + t.y * t.y));
+        t.x /= norm;
+        t.y /= norm;
+        
+        cosT = Math.cos(halfPi);
+        sinT = Math.sin(halfPi);
+        normals.push({
+            x: t.x * cosT - t.y * sinT,
+            y: t.x * sinT + t.y * cosT
+        });
+    }
+
+    console.log(normals);
 
     if ($("#bevel").is(":checked")) {
         createSurface(pathCurve, shapeCurve);
-        
+
     } else if ($("#simple").is(":checked")) {
         var length = $("#length").val();
         var ratio = $("#ratio").val();
         simpleExtrusion(shapeCurve, ratio, length);
-        
+
     } else if ($("#lattice").is(":checked")) {
         var angle = $("#angle").val() * 2 * Math.PI;
         var steps = $("#steps").val();
@@ -181,7 +231,7 @@ function generateSurface() {
 }
 
 function updateSurface() {
-    if($("#editMode").is(":checked")) {
+    if ($("#editMode").is(":checked")) {
         generateSurface();
     }
 }
