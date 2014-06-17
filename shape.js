@@ -27,9 +27,10 @@ var shapeOrder = parseInt($("#shapeOrder").val());
 var shapeResolution = parseInt($("#shapeResolution").val());
 
 //display
-var handleSize = 6;
+var handleSize = 20;
 var halfHandleSize = handleSize / 2;
-var pointSize = 4;
+var pointSize = 5;
+var halfPointSize = pointSize / 2;
 var displayCurve = true;
 var displayPoly = false;
 
@@ -122,12 +123,12 @@ function shape_getMousePos(evt) {
 
 function shape_drawPoints() {
     shapeCtx.beginPath();
-    shapeCtx.strokeStyle = "rgb(100, 100, 255)";
+    shapeCtx.strokeStyle = "rgb(255, 255, 255)";
     shapeCtx.fillStyle = "rgba(100, 100, 200, .25)";
-
+	
     for (i = 0; i < shapePoints.length; i++) {
         var point = shapePoints[i];
-        shapeCtx.rect(point.x - halfHandleSize, point.y - halfHandleSize, handleSize, handleSize);
+        shapeCtx.rect(point.x - halfPointSize, point.y - halfPointSize, pointSize, pointSize);
     }
 
     shapeCtx.stroke();
@@ -331,6 +332,11 @@ $("#shape").mousedown(function(event) {
                 case 1: // Left click
                     shapePointIndex = i;
                     shapeDragging = true;
+                    break;
+				case 3 : //Right click
+                    shapePointIndex = i;
+                    shapePoints.splice(i, 1);
+                    shape_updateAll();
                     break;
             }
             break;

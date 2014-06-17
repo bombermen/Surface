@@ -26,13 +26,6 @@ var pathCyclic = false;
 var pathOrder = parseInt($("#pathOrder").val());
 var pathResolution = parseInt($("#pathResolution").val());
 
-//display
-var handleSize = 6;
-var halfHandleSize = handleSize / 2;
-var pointSize = 4;
-var displayCurve = true;
-var displayPoly = false;
-
 function path_drawBackground() {
     //bg
     pathCtx.fillStyle = "rgb(15, 60, 100)";
@@ -121,12 +114,12 @@ function path_getMousePos(evt) {
 
 function path_drawPoints() {
     pathCtx.beginPath();
-    pathCtx.strokeStyle = "rgb(100, 100, 255)";
+    pathCtx.strokeStyle = "rgb(255, 255, 255)";
     pathCtx.fillStyle = "rgba(100, 100, 200, .25)";
 
     for (i = 0; i < pathPoints.length; i++) {
         var point = pathPoints[i];
-        pathCtx.rect(point.x - halfHandleSize, point.y - halfHandleSize, handleSize, handleSize);
+        pathCtx.rect(point.x - halfPointSize, point.y - halfPointSize, pointSize, pointSize);
     }
 
     pathCtx.stroke();
@@ -330,6 +323,11 @@ $("#path").mousedown(function(event) {
                 case 1: // Left click
                     pathPointIndex = i;
                     pathDragging = true;
+                    break;
+				 case 3 : //Right click
+                    pathPointIndex = i;
+                    pathPoints.splice(i, 1);
+                    path_updateAll();
                     break;
             }
             break;
