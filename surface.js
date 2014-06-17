@@ -126,6 +126,11 @@ function generateSurface() {
     }
     initBuffers(verts, indices);
 }
+
+
+
+
+
 $(document).ready(function () {
 	$("#editMode").hide();
 	$("#editModeLabel").hide();
