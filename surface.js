@@ -4,10 +4,12 @@ var indices = new Array();
 
 function createSurface(path, shape) {
 
+    //create verts
     for (var i = 0; i < path.length; ++i) {
         createSectionAt(path, shape, i);
     }
 
+    //triangulate faces
     for (var i = 0; i < path.length - 1; ++i) {
         for (var j = 0; j < shape.length - 1; ++j) {
             //first triangle
@@ -30,6 +32,7 @@ function createSectionAt(path, shape, i) {
     var v = {x: 0, y: 0, z: 0};
     var k = {x: 0, y: 0, z: 1};
 
+    //speed vector
     if (i === 0) {
         if (pathCyclic) {
             t.x = path[1].x - path[path.length - 1].x;
@@ -60,6 +63,7 @@ function createSectionAt(path, shape, i) {
     v.y = t.z * k.x - t.x * k.z;
     v.z = t.x * k.y - t.y * k.x;
 
+    //set vertices on plane whose normal is the speed vector
     for (var j = 0; j < shape.length; ++j) {
         var s = {x: 0, y: 0};
         s.x = shape[j].x / shapeCanvas.width - .5;
@@ -118,36 +122,41 @@ function generateLatticeSection(shape, angle) {
 }
 
 function simpleExtrusion(shape, ratio, length) {
-
-    for (var i = 0, len = shape.length; i < len; ++i) {
-        var s = {x: 0, y: 0};
-        s.x = shape[i].x / shapeCanvas.width - .5;
-        s.y = shape[i].y / shapeCanvas.height - .5;
-
-        verts.push(s.x);
-        verts.push(s.y);
-        verts.push(0);
+    
+    var steps = $("#steps").val();
+    for(var i = 0; i < steps; ++i) {
+        generateSimpleSectionAt(shape, i, ratio, length, steps - 1);
     }
+    
+    for (var i = 0; i < steps - 1; ++i) {
+        for (var j = 0; j < shape.length - 1; ++j) {
+            //first triangle
+            indices.push(i * shape.length + j);
+            indices.push(i * shape.length + j + 1);
+            indices.push((i + 1) * shape.length + j);
 
-    for (var i = 0, len = shape.length; i < len; ++i) {
-        var s = {x: 0, y: 0};
-        s.x = shape[i].x / shapeCanvas.width - .5;
-        s.y = shape[i].y / shapeCanvas.height - .5;
-
-        verts.push(s.x / ratio);
-        verts.push(s.y / ratio);
-        verts.push(length);
-
-        indices.push(i);
-        indices.push(i + 1);
-        indices.push(len + i - 1);
-
-        indices.push(i + 1);
-        indices.push(len + i);
-        indices.push(len + i - 1);
+            //second triangle
+            indices.push(i * shape.length + j + 1);
+            indices.push((i + 1) * shape.length + j + 1);
+            indices.push((i + 1) * shape.length + j);
+        }
     }
+}
 
-    console.log(indices);
+function generateSimpleSectionAt(shape, i, ratio, length, steps) {
+    
+    var z = i * length / steps;
+    var currentRatio = 1 - (i * ratio / steps);
+    
+    for (var j = 0, len = shape.length; j < len; ++j) {
+        var s = {x: 0, y: 0};
+        s.x = shape[j].x / shapeCanvas.width - .5;
+        s.y = shape[j].y / shapeCanvas.height - .5;
+
+        verts.push(s.x * currentRatio);
+        verts.push(s.y * currentRatio);
+        verts.push(z);
+    }
 }
 
 function generateSurface() {
@@ -155,17 +164,28 @@ function generateSurface() {
     verts = new Array();
     indices = new Array();
 
-    if ($("#bevel:checked").val() === 'on') {
+    if ($("#bevel").is(":checked")) {
         createSurface(pathCurve, shapeCurve);
-    } else if ($("#simple:checked").val() === 'on') {
-        simpleExtrusion(shapeCurve, .5, 1);
-    } else if ($("#lattice:checked").val() === 'on') {
-        generateLattice(shapeCurve, 1 * Math.PI, 32);
+        
+    } else if ($("#simple").is(":checked")) {
+        var length = $("#length").val();
+        var ratio = $("#ratio").val();
+        simpleExtrusion(shapeCurve, ratio, length);
+        
+    } else if ($("#lattice").is(":checked")) {
+        var angle = $("#angle").val() * 2 * Math.PI;
+        var steps = $("#steps").val();
+        generateLattice(shapeCurve, angle, steps);
     }
-    console.log(verts);
-    console.log(indices);
     initBuffers(verts, indices);
 }
+
+function updateSurface() {
+    if($("#editMode").is(":checked")) {
+        generateSurface();
+    }
+}
+
 $(document).ready(function() {
     $("#editMode").hide();
     $("#editModeLabel").hide();
