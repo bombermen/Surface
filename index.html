@@ -85,7 +85,13 @@
                     <input id="lattice" name="group" type="radio" /><label for="lattice">Lattice</label>
                     <br/><br/>
                     <button id="generateSurface" type="button" onclick="generateSurface()">Generate surface</button>
-                    <label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" /> 
+                    <label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" />
+                    <br/>
+                    <label for="length">Length</label><input id="length" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="" />
+                    <label for="ratio">Ratio</label><input id="ratio" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="" />
+
+                    <label for="angle">Angle</label><input id="angle" type="range" min="0.0" max="6.28318530718" value="3.14" step="0.01" oninput="" />
+                    <label for="steps">Steps</label><input id="steps" type="range" min="1.0" max="1.0" value="0.5" step="0.01" oninput="" /> 
                 </div>
             </div>
 
