@@ -167,53 +167,6 @@ function generateSurface() {
     indices = new Array();
     normals = new Array();
 
-    var shape = new Array();
-    //init shape
-    for (var i = 0, len = shapeCurve.length; i < len; ++i) {
-        shape.push({
-            x: shapeCurve[i].x / shapeCanvas.width - .5,
-            y: shapeCurve[i].y / shapeCanvas.height - .5});
-    }
-
-    //init normals
-    var halfPi = Math.PI / 2;
-    var t = {x: 0, y: 0};
-    for (var i = 0, len = shape.length; i < len; ++i) {
-        if (i === 0) {
-            if (shapeCyclic) {
-                t.x = shape[1].x - shape[len - 1].x;
-                t.y = shape[1].y - shape[len - 1].y;
-            } else {
-                t.x = shape[1].x - shape[0].x;
-                t.y = shape[1].y - shape[0].y;
-            }
-        } else if (i === len - 1) {
-            if (shapeCyclic) {
-                t.x = shape[1].x - shape[len - 1].x;
-                t.y = shape[1].y - shape[len - 1].y;
-            } else {
-                t.x = shape[len - 1].x - shape[len - 2].x;
-                t.y = shape[len - 1].y - shape[len - 2].y;
-            }
-        } else {
-            t.x = shape [i + 1].x - shape[i - 1].x;
-            t.y = shape [i + 1].y - shape[i - 1].y;
-        }
-        
-        norm = (Math.sqrt(t.x * t.x + t.y * t.y));
-        t.x /= norm;
-        t.y /= norm;
-        
-        cosT = Math.cos(halfPi);
-        sinT = Math.sin(halfPi);
-        normals.push({
-            x: t.x * cosT - t.y * sinT,
-            y: t.x * sinT + t.y * cosT
-        });
-    }
-
-    console.log(normals);
-
     if ($("#bevel").is(":checked")) {
         createSurface(pathCurve, shapeCurve);
 

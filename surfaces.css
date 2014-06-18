@@ -27,7 +27,7 @@ body {
     margin: 10px;
     position: relative;
     width: 450px;
-    height: 800px;
+    height: 1000px;
 }
 
 .box_shadow {
@@ -52,15 +52,16 @@ body {
     float: right;
 }
 
-#options label {
-    width: 100px;
-}
-
 .options input {
 }
 
 .options {
     padding-top: 10px;
+}
+
+.floatingLabel label {
+    width: 100px;
+    float: left;
 }
 
 h1 {

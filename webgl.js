@@ -72,7 +72,7 @@ function initShaders() {
 
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
+    
     shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
     shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 }
@@ -107,33 +107,33 @@ function degToRad(degrees) {
 }
 
 
-var cubeVertexPositionBuffer;
-var cubeVertexColorBuffer;
-var cubeVertexIndexBuffer;
+var vertexPositionBuffer;
+var vertexColorBuffer;
+var vertexIndexBuffer;
 
 function initBuffers(verts, indices) {
     
-    cubeVertexPositionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+    //verts
+    vertexPositionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
 
     vertices = verts;
-
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-    cubeVertexPositionBuffer.itemSize = 3;
-    cubeVertexPositionBuffer.numItems = verts.length;
+    vertexPositionBuffer.itemSize = 3;
+    vertexPositionBuffer.numItems = verts.length;
 
-    cubeVertexIndexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+    //indices
+    vertexIndexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
 
-    var cubeVertexIndices = indices;
-
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
-    cubeVertexIndexBuffer.itemSize = 1;
-    cubeVertexIndexBuffer.numItems = indices.length;
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+    vertexIndexBuffer.itemSize = 1;
+    vertexIndexBuffer.numItems = indices.length;
 }
 
 var rCube = 0;
+var rotation = {x: 0, y: 0, z: 0};
 
 function drawScene() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -146,28 +146,29 @@ function drawScene() {
     mat4.translate(mvMatrix, [0.0, 0.0, -distance]);
 
     mvPushMatrix();
-    mat4.rotate(mvMatrix, degToRad(rCube), [1, 1, 1]);
+    mat4.rotate(mvMatrix, rotation.x, [1, 0, 0]);
+    mat4.rotate(mvMatrix, rotation.y, [0, 1, 0]);
+    mat4.rotate(mvMatrix, rotation.z, [0, 0, 1]);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
     setMatrixUniforms();
-
 
     if(colorMode != 2)
     {    
         gl.enable(gl.DEPTH_TEST);
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uIsWireFramed"), 0);
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uColorMode"), colorMode);
-        gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
     }
 
     if(renderMode == 1)
     {
         gl.disable(gl.DEPTH_TEST);
         gl.uniform1i(gl.getUniformLocation(shaderProgram, "uIsWireFramed"), 1);
-        gl.drawElements(gl.LINE_STRIP, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.LINES, vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
     }
 
     mvPopMatrix();
@@ -220,4 +221,16 @@ function render(choice)
 function color(choice)
 {
    colorMode = choice; 
+}
+
+function updateRotationX(r) {
+    rotation.x = r;
+}
+
+function updateRotationY(r) {
+    rotation.y = r;
+}
+
+function updateRotationZ(r) {
+    rotation.z = r;
 }

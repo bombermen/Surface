@@ -25,6 +25,7 @@
         <script id="shader-vs" type="x-shader/x-vertex">
             attribute vec3 aVertexPosition;
             //attribute vec4 aVertexColor;
+            attribute vec3 aVertexNormal;
 
             uniform mat4 uMVMatrix;
             uniform mat4 uPMatrix;
@@ -64,11 +65,13 @@
 
                 <canvas id="path" class="box_shadow" width="450px" height="450px"></canvas>
                 <div class="options">
-                    <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
-                    <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
-                    <label for="pathCyclic">Cyclic</label><input id="pathCyclic" type="checkbox" /><br/>
-                    <label for="pathFirst">First Endpoint</label><input id="pathFirst" type="checkbox" /><br/>
-                    <label for="pathLast">Last Endpoint</label><input id="pathLast" type="checkbox" /><br/>
+                    <div class="floatingLabel">
+                        <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
+                        <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
+                    </div>
+                    <input id="pathCyclic" type="checkbox" /><label for="pathCyclic">Cyclic</label><br/>
+                    <input id="pathFirst" type="checkbox" /><label for="pathFirst">First Endpoint</label><br/>
+                    <input id="pathLast" type="checkbox" /><label for="pathLast">Last Endpoint</label><br/>
                 </div>
             </div>
 
@@ -76,11 +79,13 @@
                 <h2>Shape</h2>
                 <canvas id="shape" class="box_shadow" width="450px" height="450px"></canvas>
                 <div class="options firstPart">
-                    <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
-                    <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
-                    <label for="shapeCyclic">Cyclic</label><input id="shapeCyclic" type="checkbox" /><br/>
-                    <label for="shapeFirst">First Endpoint</label><input id="shapeFirst" type="checkbox" /><br/>
-                    <label for="shapeLast">Last Endpoint</label><input id="shapeLast" type="checkbox" /><br/>
+                    <div class="floatingLabel">
+                        <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
+                        <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
+                    </div>
+                    <input id="shapeCyclic" type="checkbox" /><label for="shapeCyclic">Cyclic</label><br/>
+                    <input id="shapeFirst" type="checkbox" /><label for="shapeFirst">First Endpoint</label><br/>
+                    <input id="shapeLast" type="checkbox" /><label for="shapeLast">Last Endpoint</label><br/>
                 </div>
             </div>
 
@@ -88,6 +93,13 @@
                 <h2>Surface</h2>
                 <canvas id="surfaceCanvas" style="border: none; margin-top: 10px;" width="450px" height="450px"></canvas>
                 <div class="options">
+                    <div class="floatingLabel">
+                        <label for="distance">Distance</label><input id="distance" type="range" min="0.0" max="5.0" value="4" step="0.01" oninput="updateDistance(this.value)" /><br/>
+                        <label for="x">x</label><input id="x" type="range" min="-3.1415926" max="3.1415926" value="0.0" step="0.01" oninput="updateRotationX(this.value)" /><br/>
+                        <label for="y">y</label><input id="y" type="range" min="-3.1415926" max="3.1415926" value="0.0" step="0.01" oninput="updateRotationY(this.value)" /><br/>
+                        <label for="z">z</label><input id="z" type="range" min="-3.1415926" max="3.1415926" value="0.0" step="0.01" oninput="updateRotationZ(this.value)" /><br/>
+                    </div>
+
                     <h3>Render Mode</h3>
                     <input id="solid" name="render" type="radio" checked onclick="render(0)"/><label for="solid">Solid</label>
                     <input id="wireframe" name="render" type="radio"  onclick="render(1)" /><label for="wireframe">WireFrame</label>
@@ -96,10 +108,8 @@
                     <input id="colors" name="color" type="radio" checked onclick="color(0)"/><label for="colors">Lot of colors</label>
                     <input id="unique" name="color" type="radio" onclick="color(1)"/><label for="unique">Simple Color</label>
 
-              <input id="none" name="color" type="radio"  onclick="color(2)" /><label for="none">None</label> 
+                    <input id="none" name="color" type="radio"  onclick="color(2)" /><label for="none">None</label><br/>
 
-                    <br/>
-                    <label for="distance">Distance</label><input id="distance" type="range" min="1.0" max="5.0" value="4" step="0.01" oninput="updateDistance(this.value)" />
                     <h3>Extrusion Type</h3>
                     <input id="simple" name="group" type="radio" checked /><label for="simple">Simple</label>
                     <input id="bevel" name="group" type="radio" /><label for="bevel">Bevel</label>
@@ -108,11 +118,13 @@
                     <button id="generateSurface" type="button" onclick="generateSurface()">Generate surface</button>
                     <label id="editModeLabel" for="editMode">Editing</label><input type="checkbox" id="editMode" />
                     <br/>
-                    <label for="length">Length</label><input id="length" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
-                    <label for="ratio">Ratio</label><input id="ratio" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
+                    <div class="floatingLabel">
+                        <label for="length">Length</label><input id="length" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
+                        <label for="ratio">Ratio</label><input id="ratio" type="range" min="0.0" max="1.0" value="0.5" step="0.01" oninput="updateSurface()" /><br/>
 
-                    <label for="angle">Angle</label><input id="angle" type="range" min="0.0" max="1.0" value="1.0" step="0.01" oninput="updateSurface()" /><br/>
-                    <label for="steps">Steps</label><input id="steps" type="range" min="2" max="100" value="32" step="1" oninput="updateSurface()" /><br/>
+                        <label for="angle">Angle</label><input id="angle" type="range" min="0.0" max="1.0" value="1.0" step="0.01" oninput="updateSurface()" /><br/>
+                        <label for="steps">Steps</label><input id="steps" type="range" min="2" max="100" value="32" step="1" oninput="updateSurface()" /><br/>
+                    </div>
                 </div>
             </div>
 

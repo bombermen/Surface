@@ -380,7 +380,7 @@ function path_updateAll() {
 }
 
 function path_updateOrder(o) {
-    pathOrder = o;
+    pathOrder = parseInt(o);
     path_updateAll();
 }
 

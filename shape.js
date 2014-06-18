@@ -183,7 +183,6 @@ function shape_coxDeBoor(poly, t, r) {
         for (var i = r - shapeOrder + j; i <= r; ++i) {
             var denominator = shapeKnots[i - j + shapeOrder + 1] - shapeKnots[i];
 
-
             var x = (t - shapeKnots[i]) * shapeP[j - 1][i].x + (shapeKnots[i - j + shapeOrder + 1] - t) * shapeP[j - 1][i - 1].x;
             var y = (t - shapeKnots[i]) * shapeP[j - 1][i].y + (shapeKnots[i - j + shapeOrder + 1] - t) * shapeP[j - 1][i - 1].y;
 
@@ -389,7 +388,7 @@ function shape_updateAll() {
 }
 
 function shape_updateOrder(o) {
-    shapeOrder = o;
+    shapeOrder = parseInt(o);
     shape_updateAll();
 }
 
