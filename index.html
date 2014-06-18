@@ -65,28 +65,32 @@
 
                 <canvas id="path" class="box_shadow" width="450px" height="450px"></canvas>
                 <div class="options">
-                    <div class="floatingLabel">
-                        <label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
-                        <label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
-                    </div>
-                    <input id="pathCyclic" type="checkbox" /><label for="pathCyclic">Cyclic</label><br/>
-                    <input id="pathFirst" type="checkbox" /><label for="pathFirst">First Endpoint</label><br/>
-                    <input id="pathLast" type="checkbox" /><label for="pathLast">Last Endpoint</label><br/>
+					<div class="center_vertical">
+						<div class="floatingLabel">
+							<label for="pathOrder">Order</label><input id="pathOrder" type="number" value="3" min="1" onchange="path_updateOrder(this.value)" /><br/>
+							<label for="pathResolution">Resolution</label><input id="pathResolution" type="number" value="5" min="1" onchange="path_updateResolution(this.value)" /><br/>
+						</div>
+						<input id="pathCyclic" type="checkbox" /><label for="pathCyclic">Cyclic</label><br/>
+						<input id="pathFirst" type="checkbox" /><label for="pathFirst">First Endpoint</label><br/>
+						<input id="pathLast" type="checkbox" /><label for="pathLast">Last Endpoint</label><br/>
+					</div>
                 </div>
             </div>
 
             <div id="forme" class="page box_shadow">
                 <h2>Shape</h2>
                 <canvas id="shape" class="box_shadow" width="450px" height="450px"></canvas>
-                <div class="options firstPart">
-                    <div class="floatingLabel">
-                        <label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
-                        <label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
-                    </div>
-                    <input id="shapeCyclic" type="checkbox" /><label for="shapeCyclic">Cyclic</label><br/>
-                    <input id="shapeFirst" type="checkbox" /><label for="shapeFirst">First Endpoint</label><br/>
-                    <input id="shapeLast" type="checkbox" /><label for="shapeLast">Last Endpoint</label><br/>
-                </div>
+                <div class="options">
+					<div class="center_vertical">
+						<div class="floatingLabel">
+							<label for="shapeOrder">Order</label><input id="shapeOrder" type="number" value="3" min="1" onchange="shape_updateOrder(this.value)" /><br/>
+							<label for="shapeResolution">Resolution</label><input id="shapeResolution" type="number" value="5" min="1" onchange="shape_updateResolution(this.value)" /><br/>
+						</div>
+						<input id="shapeCyclic" type="checkbox" /><label for="shapeCyclic">Cyclic</label><br/>
+						<input id="shapeFirst" type="checkbox" /><label for="shapeFirst">First Endpoint</label><br/>
+						<input id="shapeLast" type="checkbox" /><label for="shapeLast">Last Endpoint</label><br/>
+					</div>
+				</div>
             </div>
 
             <div id="surfaceDiv" class="page box_shadow">

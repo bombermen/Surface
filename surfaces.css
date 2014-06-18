@@ -27,7 +27,7 @@ body {
     margin: 10px;
     position: relative;
     width: 450px;
-    height: 1000px;
+    height: 740px;
 }
 
 .box_shadow {
@@ -56,12 +56,19 @@ body {
 }
 
 .options {
-    padding-top: 10px;
+    margin-top: 10px;
+	height: 225px;
+	overflow-y: auto;
 }
 
 .floatingLabel label {
     width: 100px;
     float: left;
+}
+
+.center_vertical {
+	position: relative;
+	top: 25%;
 }
 
 h1 {
